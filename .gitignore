@@ -205,3 +205,24 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+# ML / experiments
+*.pt
+*.pth
+*.pkl
+*.joblib
+*.h5
+*.ckpt
+*.onnx
+test_workspace/
+experiment_*/
+runs/
+wandb/
+*.log
+
+# Local config / secrets
+.env
+.env.*
+*.local.yaml
+test_config.yaml
