@@ -1,0 +1,16 @@
+{
+  "env": "mle_bench",
+  "problem_idx": "ventilator-pressure-prediction",
+  "model_name": "openai/gpt-oss-120b",
+  "sampler_type": "greedy",
+  "initial_exp_type": "random",
+  "group_size": 8,
+  "groups_per_batch": 16,
+  "learning_rate": "4e-5",
+  "num_epochs": 25,
+  "num_cpus_per_task": 2,
+  "eval_timeout": 300,
+  "wandb_project": "discover-ttt",
+  "wandb_name": "mle",
+  "load_checkpoint_path": ""
+}

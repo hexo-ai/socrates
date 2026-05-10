@@ -1,0 +1,46 @@
+# Local Testing Configuration
+# Copy this file to test_config.yaml and edit the values below
+
+# Problem statement for the agent to solve
+problem_statement: |
+  Fix the bug in the authentication system.
+  The login endpoint is returning 500 errors.
+
+# Maximum number of steps the agent can take
+max_steps: 10
+
+# API keys (OPTIONAL - will use environment variables if not provided)
+# In production, all API keys are automatically available as environment variables
+# Only specify here if you want to override for local testing
+api_keys: {}
+  # ANTHROPIC_API_KEY: "sk-ant-api03-..."  # Optional override  # pragma: allowlist secret
+  # OPENAI_API_KEY: "sk-..."  # pragma: allowlist secret
+  # GITHUB_TOKEN: "ghp_..."
+
+# Agent configuration
+agent_config:
+  model: "claude-3-5-sonnet-20241022"
+  temperature: 1.0
+  max_tokens: 4096
+  # Add any custom config your agent needs:
+  # custom_setting: value
+
+# Test metadata
+experiment_id: "local-test-001"
+project_id: "local-project"
+
+# Optional: Test continue_agent with user messages
+# If continue_messages is provided, start() will be skipped and only continue_agent is tested
+# This simulates sending user messages to the agent during execution
+# continue_messages:
+#   - message: "Please add error handling to the code"
+#     new_max_steps: 15
+#     step_number: null  # Optional: specific step to continue from
+#     branch_name: null  # Optional: git branch name for the continuation
+#
+#   - message: "Now add unit tests for the error handling"
+#     new_max_steps: 20
+#     step_number: 10    # Optional: continue from step 10
+#     branch_name: "feature/tests"  # Optional: create new branch
+#
+# Each continue message will be sent after the previous one completes
