@@ -1,0 +1,49 @@
+# Base image files (already in Docker image, must NOT overwrite)
+base_agent.py
+models.py
+
+# Local testing files (don't copy to Docker image)
+test_agent_locally.py
+test_config.yaml
+test_config.yaml.example
+webhooks/
+
+# Generated artifacts
+src
+test_workspace/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Git
+.git/
+.gitignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary build files
+Dockerfile.generated
+validate_agent.py
+
+# Documentation
+README.md

@@ -1,0 +1,91 @@
+# Agent Test Configuration
+# All UPPERCASE keys are environment variables (matches production deployment)
+
+# ===================================================================
+# Core Variables (Mapped to Agent Attributes)
+# ===================================================================
+
+EXPERIMENT_ID: "local-test-001"
+PROJECT_ID: "local-project"
+
+TASK_DESCRIPTION: |
+  Solve the ventilator-pressure-prediction MLE-bench task.
+
+MAX_ITERATIONS: 10
+EVAL_CRITERIA: "Complete the task successfully"
+
+# Agent configuration (passed as AGENT_CONFIG env var, converted to JSON)
+# All keys must match schema.json defaults
+AGENT_CONFIG:
+  exp_id: "ventilator-pressure-prediction"
+  dataset_dir: "/data/mle-bench/data"
+  data_dir: ""
+  desc_file: ""
+  goal: ""
+  eval: ""
+  model: "claude-opus-4-6"
+  feedback_model: ""
+  base_url: ""
+  feedback_base_url: ""
+  steps: 500
+  time_limit: 43200
+  initial_drafts: 3
+  seed: 42
+  parallel_search_num: 3
+  use_coldstart: true
+  use_diff_mode: true
+  check_data_leakage: true
+  use_global_memory: false
+  exec_timeout: 32400
+  start_cpu_id: 0
+  cpu_number: 21
+  num_gpus: 1
+  extra_overrides: {}
+
+# ===================================================================
+# Environment-Only Variables
+# ===================================================================
+
+APPROACH: ""
+INITIAL_STEP: 1
+PROMPT_TYPE: ""
+AGENT_TYPE: "self_contained"
+
+# ===================================================================
+# API Keys
+# ===================================================================
+# OPTIONAL - will use environment variables if not provided.
+# Fill these in for local testing.
+
+ANTHROPIC_API_KEY: ""
+OPENAI_API_KEY: ""
+GEMINI_API_KEY: ""
+
+# ===================================================================
+# System Settings
+# ===================================================================
+
+WORKSPACE_DIR: "/workspace"
+SSH_ENABLED: false
+
+# ===================================================================
+# Local Testing Only: Copy files to workspace before starting
+# ===================================================================
+
+WORKSPACE_FILES:
+  # Examples:
+  # - "data/"                    # Copy entire folder
+  # - source: "local_data/"      # Copy with custom destination
+  #   dest: "project/data/"
+
+# ===================================================================
+# Optional: Test continue_agent with user messages
+# ===================================================================
+
+# continue_messages:
+#   - message: "Please add error handling to the code"
+#     new_max_steps: 15
+#
+#   - message: "Now add unit tests for the error handling"
+#     new_max_steps: 20
+#     step_number: 10
