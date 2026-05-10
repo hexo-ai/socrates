@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Socrates — slide deck (Loom-ready)</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+  }
+  .slide {
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    padding: 60px 80px;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 0; left: 0;
+  }
+  .slide.active { display: flex; }
+  h1 { font-size: 3.2rem; margin: 0 0 24px 0; line-height: 1.1; color: #ffffff; }
+  h2 { font-size: 2.4rem; margin: 0 0 32px 0; color: #ffffff; }
+  h3 { font-size: 1.5rem; margin: 24px 0 12px 0; color: #79c0ff; font-weight: 600; }
+  p, li { font-size: 1.6rem; line-height: 1.5; margin: 8px 0; }
+  ul { padding-left: 28px; }
+  li { margin: 12px 0; }
+  .subtitle { font-size: 1.4rem; color: #8b949e; margin-top: 16px; }
+  .footer-meta {
+    position: absolute; bottom: 20px; right: 30px;
+    font-size: 0.85rem; color: #4a5568;
+  }
+  .slide-num {
+    position: absolute; bottom: 20px; left: 30px;
+    font-size: 0.85rem; color: #4a5568;
+  }
+  img.center {
+    max-width: 80%; max-height: 60vh;
+    display: block; margin: 20px auto;
+    border-radius: 6px;
+  }
+  table {
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 1.15rem;
+  }
+  th, td { border: 1px solid #30363d; padding: 8px 14px; text-align: left; }
+  th { background: #161b22; color: #79c0ff; }
+  .highlight { color: #ffa657; font-weight: 600; }
+  .accent { color: #79c0ff; font-weight: 600; }
+  .green { color: #56d364; font-weight: 600; }
+  .red { color: #f85149; font-weight: 600; }
+  .big-number { font-size: 5.5rem; font-weight: 800; color: #ffa657; margin: 16px 0; line-height: 1; }
+  .quote {
+    border-left: 4px solid #79c0ff;
+    padding: 8px 0 8px 24px;
+    margin: 16px 0;
+    font-style: italic;
+    color: #c9d1d9;
+  }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .card {
+    background: #161b22;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #30363d;
+  }
+  .card h3 { margin-top: 0; }
+  .controls {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    background: rgba(0,0,0,0.5); color: #8b949e; padding: 6px 14px;
+    border-radius: 4px; font-size: 0.8rem; pointer-events: none;
+  }
+  kbd {
+    background: #21262d; padding: 2px 6px; border-radius: 3px;
+    border: 1px solid #30363d; font-family: monospace;
+  }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<section class="slide active">
+  <h1>Socrates</h1>
+  <p style="font-size: 2rem; color: #c9d1d9; margin: 0;">Structured Questioning Unlocks Latent Knowledge in AI Research Agents</p>
+  <p class="subtitle">A question-only advisor — no tools, no answers, no directives — improves Kaggle test scores by <span class="highlight">+55.9%</span> on average across five MLE-bench tasks.</p>
+  <p class="subtitle" style="margin-top: 40px;">Vrabac, Hebbar, Manawat, Palanimalai, Verboomen, Juneja, Bhatia, Baskaran &nbsp;·&nbsp; Hexo.ai</p>
+  <p class="slide-num">1 / 10</p>
+</section>
+
+<!-- Slide 2: The puzzle -->
+<section class="slide">
+  <h2>The puzzle</h2>
+  <div class="grid-2">
+    <div>
+      <h3>What LLMs know</h3>
+      <div class="big-number green">&gt;88%</div>
+      <p>on MMLU machine-learning content — cross-validation, leakage, overfitting. They can explain it all.</p>
+    </div>
+    <div>
+      <h3>What LLMs do as agents</h3>
+      <div class="big-number red">16.9%</div>
+      <p>Kaggle bronze rate on MLE-bench. They tune hyperparameters, introduce target leakage, and fixate on one model family.</p>
+    </div>
+  </div>
+  <p style="margin-top: 30px;">Same model. Same parametric knowledge. The gap is between what the model <span class="accent">knows</span> and what it <span class="accent">applies</span> during autonomous operation.</p>
+  <p class="slide-num">2 / 10</p>
+</section>
+
+<!-- Slide 3: Activation, not capacity -->
+<section class="slide">
+  <h2>Our claim</h2>
+  <p style="font-size: 2rem; margin: 30px 0;">The bottleneck is <span class="highlight">knowledge activation</span>, not knowledge capacity.</p>
+  <p>Relevant parametric knowledge exists in the weights but is not surfaced into the working context at decision time.</p>
+  <h3>Why standard fixes don't work</h3>
+  <ul>
+    <li><strong>Self-critique</strong> (Self-Refine, Reflexion) — same context produced the error AND the critique.</li>
+    <li><strong>Multi-agent debate</strong> — agents from the same distribution converge on shared errors.</li>
+    <li><strong>Manager–worker</strong> — manager's blind spots are transferred to the worker; exploration collapses.</li>
+  </ul>
+  <p class="slide-num">3 / 10</p>
+</section>
+
+<!-- Slide 4: Protocol -->
+<section class="slide">
+  <h2>The protocol</h2>
+  <img class="center" src="protocol.png" alt="Socrates protocol diagram">
+  <p style="margin-top: 12px;">Pair a tool-using <span class="accent">Scientist</span> with a question-only <span class="accent">Socrates</span> advisor. Before each experiment, the Scientist writes a plan. Socrates reviews and responds with <em>only questions</em>, until it emits <code>[APPROVED]</code>.</p>
+  <p class="slide-num">4 / 10</p>
+</section>
+
+<!-- Slide 5: The constraint -->
+<section class="slide">
+  <h2>The Socratic constraint</h2>
+  <p>Socrates is forbidden from:</p>
+  <div class="grid-3" style="margin-top: 20px;">
+    <div class="card">
+      <h3>No answers</h3>
+      <p>Cannot say <em>"use 5-fold CV"</em>.</p>
+    </div>
+    <div class="card">
+      <h3>No directives</h3>
+      <p>Cannot say <em>"try a different architecture"</em>.</p>
+    </div>
+    <div class="card">
+      <h3>No tools</h3>
+      <p>No code execution. No file I/O. Only questions.</p>
+    </div>
+  </div>
+  <p style="margin-top: 30px; font-size: 1.45rem;">Because the advisor cannot transfer information, <span class="highlight">any improvement must originate from the Scientist's own parametric knowledge</span> — merely <em>activated</em> by the question.</p>
+  <p class="slide-num">5 / 10</p>
+</section>
+
+<!-- Slide 6: Conditions -->
+<section class="slide">
+  <h2>Three conditions, same LLM</h2>
+  <table style="width: 100%; font-size: 1.3rem;">
+    <thead>
+      <tr><th>Condition</th><th>Description</th><th>What it isolates</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Scientist-only</strong></td><td>Single agent, full tools, no supervision.</td><td>Standard single-agent baseline.</td></tr>
+      <tr><td><strong>Baseline PI</strong></td><td>Second agent in the same scaffold — but only generic encouragement (<em>"please keep iterating"</em>).</td><td>Matched in tokens and turns. Controls for <em>having any second agent</em>.</td></tr>
+      <tr><td><strong>Socrates</strong></td><td>Full protocol: question-only advisor, <code>[APPROVED]</code> gate.</td><td>The intervention.</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top: 30px;">A Socrates-over-Baseline-PI win therefore measures the <span class="accent">nature</span> of the questioning, not the <em>presence</em> of supervision.</p>
+  <p class="slide-num">6 / 10</p>
+</section>
+
+<!-- Slide 7: Results -->
+<section class="slide">
+  <h2>Results — Kaggle test scores</h2>
+  <table style="font-size: 1.2rem; margin: 0 auto;">
+    <thead>
+      <tr>
+        <th>Task</th><th>Scientist</th><th>Baseline PI</th><th>Socrates</th><th>Δ vs Sci</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Statoil</td><td>0.255</td><td>0.251</td><td><span class="green">0.229</span></td><td class="highlight">+10.5%</td></tr>
+      <tr><td>COVID</td><td>0.389</td><td>0.308</td><td><span class="green">0.294</span></td><td class="highlight">+24.4%</td></tr>
+      <tr><td>Ventilator</td><td>1.534</td><td><span class="green">0.815</span></td><td>0.853</td><td>+44.4%</td></tr>
+      <tr><td>NFL</td><td>0.198</td><td>0.537</td><td><span class="green">0.584</span></td><td class="highlight">+195.4%</td></tr>
+      <tr><td>Smartphone</td><td>6.285</td><td>5.993</td><td><span class="green">5.984</span></td><td class="highlight">+4.8%</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top: 24px; text-align: center; font-size: 1.4rem;">
+    Best score on <span class="highlight">4 of 5</span> tasks · mean improvement <span class="highlight">+55.9%</span> · beats Baseline PI on <span class="highlight">4 of 5</span>.
+  </p>
+  <p class="slide-num">7 / 10</p>
+</section>
+
+<!-- Slide 8: Why it works -->
+<section class="slide">
+  <h2>Why it works — four mechanisms</h2>
+  <div class="grid-2">
+    <div class="card">
+      <h3>1. Catches methodological errors</h3>
+      <p>COVID: train/val gap 80% → 27%. 512/963 features had zero importance. NFL: caught val-set threshold tuning. Ventilator: caught target leakage.</p>
+    </div>
+    <div class="card">
+      <h3>2. Forces diversification</h3>
+      <p>Statoil unprompted: 12/16 experiments are GBM tweaks. Socrates: 9 experiments across 9 model families.</p>
+    </div>
+    <div class="card">
+      <h3>3. Empirical investigation <em>during</em> review</h3>
+      <p>Scientist keeps tool access — <em>"how many features have zero importance?"</em> triggers analysis right then. Discoveries happen <em>during</em> review, not before.</p>
+    </div>
+    <div class="card">
+      <h3>4. Approach evolution</h3>
+      <p>NFL: features 10→18 (expand). Ventilator: 29→15 (contract). COVID: 963→250 (regularize). Same advisor, opposite directions — the Scientist retrieves its own domain knowledge.</p>
+    </div>
+  </div>
+  <p class="slide-num">8 / 10</p>
+</section>
+
+<!-- Slide 9: When it fails / variance -->
+<section class="slide">
+  <h2>When it fails &amp; variance check</h2>
+  <div class="grid-2">
+    <div>
+      <h3>The one loss: Ventilator</h3>
+      <p>Baseline PI 0.815 MAE beats Socrates 0.853.</p>
+      <p>The search space rewards <em>volume</em> of feature-interaction sweeps. Socrates' structured-review overhead costs experiments that Baseline PI spent on more model variants.</p>
+      <p>Take-away: structured questioning helps where methodology &mdash; not iteration count &mdash; is the bottleneck.</p>
+    </div>
+    <div>
+      <h3>Could this be seed noise?</h3>
+      <p>10-seed Scientist-only run on Smartphone:</p>
+      <ul>
+        <li>mean <strong>4.07</strong>, SD <strong>0.63</strong></li>
+        <li>SD is 15.5% of the mean (LLM agents are high-variance)</li>
+      </ul>
+      <p>Socrates achieved <span class="green">3.47</span> — below mean − 1 SD (3.44). Not seed noise alone.</p>
+    </div>
+  </div>
+  <p class="slide-num">9 / 10</p>
+</section>
+
+<!-- Slide 10: Conclusion -->
+<section class="slide">
+  <h2>Take-away</h2>
+  <p style="font-size: 1.9rem; margin: 30px 0;">The bottleneck for autonomous LLM research agents is <span class="highlight">knowledge activation</span>, not knowledge availability.</p>
+  <p>A question-only advisor — deliberately limited, no tools, no answers — is enough to bridge that gap on a meaningful fraction of tasks. It's cheap, it's simple, it drops into existing agent scaffolds.</p>
+  <h3 style="margin-top: 40px;">Resources</h3>
+  <ul>
+    <li>Code (MIT): <span class="accent">github.com/hexo-ai/socrates</span></li>
+    <li>Blog: <span class="accent">gurusha01.github.io/blog/socrates.html</span></li>
+    <li>Paper: Vrabac et al., <em>COLM 2026</em></li>
+  </ul>
+  <p class="slide-num">10 / 10</p>
+</section>
+
+<div class="controls">
+  <kbd>←</kbd> <kbd>→</kbd> navigate &nbsp;·&nbsp; <kbd>F</kbd> fullscreen &nbsp;·&nbsp; <kbd>?</kbd> help
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  let current = 0;
+  function show(i) {
+    slides.forEach(s => s.classList.remove('active'));
+    current = Math.max(0, Math.min(slides.length - 1, i));
+    slides[current].classList.add('active');
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') show(current + 1);
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') show(current - 1);
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+    else if (e.key === '?') alert('← → arrows or PgUp/PgDn to navigate. F for fullscreen. Home/End for first/last slide.');
+  });
+  document.addEventListener('click', e => {
+    if (e.clientX > window.innerWidth / 2) show(current + 1);
+    else show(current - 1);
+  });
+</script>
+</body>
+</html>
